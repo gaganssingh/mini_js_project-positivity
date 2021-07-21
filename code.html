@@ -91,30 +91,178 @@
     <main class="flex-shrink-0">
       <div class="container py-4 px-5">
         <h2 class="border-1 border-bottom border-dark mt-5">
-          Code Review for APP NAME
+          Code Review for Positivity
         </h2>
         <div class="row row-cols-1 row-cols-lg-2">
-          <!-- Code Snippet -->
+          <!-- Code Snippet Section -->
           <div class="col-lg-8">
             <pre class="line-numbers">
               <code class="language-javascript">
-                // Call Function
-                const helloWorld = () => {
-                  alert("Hello World");
-                };
-                
+                <!-- Code Snippet -->
+                // DOM SELECTORS
+const btnSubmit = document.getElementById("btnSubmit");
+const alertBox = document.getElementById("alertBox");
+const resultsTable = document.getElementById("results");
+
+// FUNCTIONS
+// Generate numbers from start value to end value
+const generateNumbersArray = (startingNumber, endingNumber) => {
+  let numbersArray = [];
+  for (let i = startingNumber; i <= endingNumber; i++) {
+    // Push each number to the numbers array
+    numbersArray.push(i);
+  }
+  return numbersArray;
+};
+
+// Display numbers and mark even numbers BOLD
+const displayNumbers = (numbers) => {
+  let tableRows = "";
+  numbers.forEach((number) => {
+    let className = "";
+    // Assign CSS class to the numbers that are even
+    if (number % 2 === 0) {
+      className = "even";
+    }
+
+    // Append the current row to the end of the table body
+    tableRows += `
+      <tr>
+        <td class="${className}">${number}</td>
+      </tr>
+    `;
+  });
+
+  // Append the constructed table to the tbody tag with id="results"
+  resultsTable.innerHTML = tableRows;
+};
+
+// Capture values from user inputs, validate them & display them
+const getValuesFromInputs = () => {
+  // Reset alert box's content & display to none
+  alertBox.innerHTML = "";
+  alertBox.classList.add("d-none");
+
+  // Get current start and end values
+  const startValue = document.getElementById("startValue").value;
+  const endValue = document.getElementById("endValue").value;
+
+  // Validate Inputs: Check that inputs are not empty
+  if (!startValue || !endValue) {
+    alertBox.innerHTML = `
+      <h3>Please enter a valid integer in the start and end fields.</h3>
+      <p>These fields cannot be empty.</p>
+    `;
+    alertBox.classList.remove("d-none");
+  }
+
+  // Convert start value & end value to numbers
+  const startValueAsNumber = +startValue;
+  const endValueAsNumber = +endValue;
+
+  // Validate Inputs: Check that inputs are valid integers
+  if (
+    typeof startValueAsNumber === "number" &&
+    typeof endValueAsNumber === "number"
+  ) {
+    // Call generateNumbers function that returns
+    // an array of numbers from start value to end value
+    const numbersArray = generateNumbersArray(
+      startValueAsNumber,
+      endValueAsNumber
+    );
+
+    // Call displayNumbers function that takes each value
+    // of the numbers array and displays them in the DOM
+    displayNumbers(numbersArray);
+  } else {
+    alertBox.innerHTML = `
+      <h3>Please enter a valid integer in the start and end fields.</h3>
+      <p>Valid numbers are any positive or negative numbers. Fractional and decimal point numbers are invalid.</p>
+    `;
+    alertBox.classList.remove("d-none");
+  }
+};
+
+// EVENT LISTENERS
+btnSubmit.addEventListener("click", getValuesFromInputs);
+
               </code>
             </pre>
           </div>
 
           <!-- Code Review & Description -->
           <div class="col-lg-4">
-            <p>SOme sub title</p>
-            <h5>helloWorld</h5>
-            <p>
-              This is a function that displays an alert message of "Hello World"
-              to the user.
-            </p>
+            <!-- Info Alert: Notifies that template literals can't be displayed -->
+            <div class="alert alert-info" role="alert">
+              <p>
+                <span>⚠︁</span>
+                Note: The code snippet section can't display template literals.
+                Please see the full source code.
+              </p>
+            </div>
+            <!-- Code Reviews -->
+            <div class="border-bottom border-2 my-3">
+              <h5>Event Listener: btnSubmit</h5>
+              <p>
+                Listens to the click action by the user on the "Show Numbers"
+                button, and executes the getValuesFromInputs function in
+                JavaScript.
+              </p>
+            </div>
+            <!-- Code Reviews -->
+            <div class="border-bottom border-2 my-3">
+              <h5>Function: getValuesFromInputs</h5>
+              <p>
+                Captures the values entered by the user in the input fields, and
+                passes them to other functions for processing and display.
+              </p>
+              <ul>
+                <li>Clears any previous alerts.</li>
+                <li>Validates inputs and converts them into integers.</li>
+                <li>
+                  Generates an array of numbers between the start and end values
+                  using the generateNumbersArray function.
+                </li>
+                <li>
+                  Appends the generated numbers, with even values in BOLD text,
+                  to the DOM using the displayNumbers function.
+                </li>
+              </ul>
+            </div>
+            <!-- Code Reviews -->
+            <div class="border-bottom border-2 my-3">
+              <h5>Function: generateNumbersArray</h5>
+              <p>
+                Accepts the starting and ending values, and returns an array of
+                numbers from the starting and ending values.
+              </p>
+              <ul>
+                <li>Uses a for loop to generate an array of numbers.</li>
+              </ul>
+            </div>
+            <!-- Code Reviews -->
+            <div>
+              <h5>Function: displayNumbers</h5>
+              <p>
+                Accepts the numbers array from the getValuesFromInputs function,
+                loops through the array and adds them to the table of results.
+              </p>
+              <ul>
+                <li>Creates an empty table rows field.</li>
+                <li>
+                  Uses the forEach array method to loop through the array.
+                </li>
+                <li>
+                  Adds each number in the array to the table as a row, applying
+                  bold styling to all even numbers.
+                </li>
+                <li>
+                  Appends the tableRows to the tbody tag, which displays the
+                  list to the user.
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
